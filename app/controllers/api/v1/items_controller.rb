@@ -26,4 +26,12 @@ private
   def item_params
     params.require(:item).permit(:name, :description)
   end
+
+  def authenticate_for_api
+    authenticate_or_request_with_http_basic("Please authenticate to use api") do |email, password|
+      user = User.find_by(email: email)
+      return true if user && user.authenticate(password)
+      head :unauthorized
+    end
+  end
 end
