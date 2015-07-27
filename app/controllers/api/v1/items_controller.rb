@@ -1,4 +1,5 @@
 class Api::V1::ItemsController < ApplicationController
+  before_action :authenticate_for_api
   respond_to :json, :xml
 
   def index
